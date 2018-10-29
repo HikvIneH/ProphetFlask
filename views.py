@@ -45,7 +45,7 @@ def homepage():
 		stock = request.form['companyname']
 		startDate = datetime.datetime(2010, 1, 4).date()
 		endDate = datetime.datetime.now().date()
-		
+		'''
 		if os.path.isfile("./static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv") == False: 
 			df_historical = pd.read_csv("./static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv")
 			df_historical.round(3)
@@ -53,7 +53,8 @@ def homepage():
 			df_historical = yf.download(stock, startDate, endDate)
 			df_historical.to_csv("./static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv")
 			df_historical.round(3)
-		
+		'''
+		df_historical = yf.download(stock, startDate, endDate)
 		df = df_historical.filter(['Close'])
 		
 		df['ds'] = df.index
