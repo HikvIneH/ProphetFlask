@@ -1,0 +1,14 @@
+name: ProphetFlask
+dependencies:
+- python=2.7
+- passlib
+- pandas
+- numpy
+- conda-forge::fbprophet
+- mysql-python
+- flask-sqlalchemy
+- flask
+- wtforms
+- pip
+- pip:
+    - fix-yahoo-finance
