@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask.ext.heroku import Heroku
+from flask-heroku import Heroku
 
 app = Flask(__name__)
 heroku = Heroku(app)
