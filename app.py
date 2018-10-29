@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask.ext.heroku import Heroku
 
 app = Flask(__name__)
+heroku = Heroku(app)
 
-#app.config.from_pyfile('config.py')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config.from_pyfile('config.py')
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 db = SQLAlchemy(app)
 
