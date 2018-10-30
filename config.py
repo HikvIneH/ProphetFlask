@@ -1,5 +1,4 @@
 DEBUG = True
-#SQLALCHEMY_DATABASE_URI = 'mysql://root:taramitha@127.0.0.1/predict_app'
-SQLALCHEMY_DATABASE_URI = 'postgres://bwzqslyzlvdwvf:a787c5e75ba66ca96a3a0ed105c0f18ca8893cf94151c714131db71b1f3305a0@ec2-54-83-38-174.compute-1.amazonaws.com:5432/d30n18efmll675'
-
+#analizon
+SQLALCHEMY_DATABASE_URI = 'postgres://gbulzogbhmkgfa:7421bd68002185ddb5a1bec3cd76747d3496f2a8dba1097626543de9eaf4b8bc@ec2-23-23-92-179.compute-1.amazonaws.com:5432/df2elepsp24ghj'
 SECRET_KEY = "Thisisasecret"
