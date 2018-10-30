@@ -1,5 +1,5 @@
 from app import db
-
+'''
 class Member(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	symbol = db.Column(db.String(50), unique=True)
@@ -8,7 +8,7 @@ class Member(db.Model):
 	def __init__(self, symbol, name):
 		self.symbol = symbol
 		self.name = name
-
+'''
 # class History(db.Model):
 # 	id = db.Column(db.Integer, primary_key=True)
 # 	date = db.Column(db.Date)
