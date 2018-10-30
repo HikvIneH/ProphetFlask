@@ -1,1 +1,1 @@
-web: gunicorn --error-logfile 'log.txt' app:app
+web: gunicorn app:app --keep-alive 10
