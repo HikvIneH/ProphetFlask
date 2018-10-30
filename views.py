@@ -76,18 +76,18 @@ def homepage():
 		forecast.set_index('ds', inplace=True)
 		#date = df['ds'].tail(plot_num)
 		
-		viz_df = df.join(forecast[['yhat', 'yhat_lower','yhat_upper']], how = 'outer')
-		viz_df['yhat_scaled'] = np.exp(viz_df['yhat'])
+		p_df = df.join(forecast[['yhat', 'yhat_lower','yhat_upper']], how = 'outer')
+		p_df['yhat_scaled'] = np.exp(p_df['yhat'])
 
-		close_data = viz_df.Close
-		forecasted_data = viz_df.yhat_scaled
+		close_data = p_df.Close
+		forecasted_data = p_df.yhat_scaled
 		date = future['ds']
-		#date = viz_df.index[-plot_num:-1]
+		#date = p_df.index[-plot_num:-1]
 		forecast_start = forecasted_data[-1]
 		forecast_future = forecasted_data[-8]
 		
-		#y_hatx = np.exp(viz_df['yhat']['2018-10-25':])
-		#y_hat = np.exp(viz_df['yhat'][-8:])
+		#y_hatx = np.exp(p_df['yhat']['2018-10-25':])
+		#y_hat = np.exp(p_df['yhat'][-8:])
 		
 
 
