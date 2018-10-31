@@ -8,6 +8,9 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
 
+class TestingConfig(Config):
+    TESTING = True
+
 app_config = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
