@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ url_for('home.dashboard') }}">MyFlaskApp</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          {% if stock_tinker and original %}
+          <li><a href="/">Homepage</a></li>
+          <!--<li><a href="/about">About</a></li>-->
+          <!--<li><a >History</a></li>-->
+          {% else %}          
+          {% endif %}
+        </ul>
+
+        <ul class="nav navbar-nav">
+          {% if stock_tinker and original %}
+          <li class="nav-item"><a><font color="grey">Symbol </font>
+            <script type="text/javascript">
+            document.write("<center><b><font color=\"grey\"><font size=\"2\">  {{ stock_tinker }}  </font><\/font></b></center>");
+            </script>
+          </a></li>
+          
+          <li class="nav-item"><a>
+            <font color="grey">Current Close</font>
+            <script type="text/javascript">
+                document.write("<center><b><font color=\"grey\"><font size=\"2\">  {{original}}  </font><\/font></b></center>");
+            </script>
+          </a></li>
+          <li><a>
+            <font color="grey">Current Close Prediction</font>
+            <script type="text/javascript">
+            if ({{forecast}} > {{original}})
+                document.write("<center><b><font color=\"green\"><font size=\"2\">  {{forecast_future}}  </font><\/font></b></center>");
+            else
+              document.write("<center><b><font color=\"red\"><font size=\"2\">  {{forecast_future}}  </font><\/font></b></center>");
+            </script>
+          </a></li>  
+          
+          <li><a>
+          <li><a>          
+            <font color="grey">Tomorrow {{ num_days }} Days Prediction</font>
+            <script type="text/javascript">
+            document.write("<center><b><font color=\"grey\"><font size=\"2\">  {{forecast}}  </font><\/font></b></center>");
+            </script>
+            </a></li>
+          {% else %}          
+          {% endif %}
+        </ul>
+        
+        <ul class="nav navbar-nav navbar-center">
+          {% if stock_tinker and original %}
+           
+          {% else %}          
+          {% endif %}
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+          {% else %}
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+          {% endif %}
+
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>

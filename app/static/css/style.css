@@ -1,0 +1,24 @@
+  .homepage
+  {
+      position: absolute;
+      top: 5%;
+      left: 10%;
+      transform: translate(-50%,-50%);
+      outline: none;	
+      font-weight: ;
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+  }
+  
+  .bottombar
+  {
+      top:95%;
+      outline: none;	
+      font-weight: ;
+      color: grey;
+      font-size: 18px;
+      text-decoration: none;
+  }
+  
+  

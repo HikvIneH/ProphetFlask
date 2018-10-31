@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% include '/home/header.html' %}
+
+{% block body %}
+	
+    <small>Welcome 
+			<script type="text/javascript">
+			document.write("<left><b><font color=\"grey\"><font size=\"2\">  {{ current_user.username }}  </font><\/font></b></left>");
+			</script>
+	</small>
+	<div class="jumbotron text-center">
+	<!--<h1 class="text-center" style = "font-family: 'Righteous', cursive; font-size: 50px; color:rgb(224, 66, 106);"">Enter the company name</h1>-->
+	
+	<h1 class="text-center" style = "font-family: cursive; font-size: 50px; color:rgb(224, 66, 106);"">Enter the company name</h1>
+	
+		<div>
+        	<form class = "form-horizontal form-group" method="post" role = "form" action="{{ url_for('home.plot') }}">
+            <div class="col-sm-12">
+            <input type="text" class="form-control" name="companyname" placeholder="Enter company ticker symbol" style="height: 40px;"> 
+			</form>		
+		</div>
+	</div>
+	<marquee class="bottombar">Stock values are subjected to market risk. Prediction is based on machine learning models. Please invest at your own risk.</marquee>
+
+{% endblock %}
+
+

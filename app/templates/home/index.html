@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <div class="jumbotron text-center">
+    <h1>Welcome</h1>
+    <p class="lead">This application is built on the Python Flask framework and is focused to implement fbprophet for stock market forecasting.</p>
+    {% if not current_user.is_authenticated %}
+      <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">Register</a>
+      <a href="{{ url_for('auth.login') }}" class="btn btn-success btn-lg">Login</a>
+    {% else %}
+    <a href="{{ url_for('home.dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+    {% endif %}
+  </div>
+{% endblock %}
