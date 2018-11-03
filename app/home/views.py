@@ -28,7 +28,7 @@ def homepage():
 def dashboard():
 	if request.method == 'POST':
 		stock = request.form['companyname']
-		startDate = datetime.datetime(2013, 1, 4).date()
+		startDate = datetime.datetime(2015, 1, 4).date()
 		endDate = datetime.datetime.now().date()
 
 		df_historical = yf.download(stock, startDate, endDate)
