@@ -1,1 +1,1 @@
-web: gunicorn -w 2 run:app --timeout 360 
+web: gunicorn run:app --timeout 360 --graceful-timeout 60
