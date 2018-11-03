@@ -1,5 +1,5 @@
-from flask import render_template, request, g, session
-from flask_login import login_required
+from flask import render_template, request
+from flask_login import login_required, current_user
 
 from . import home
 
@@ -18,21 +18,17 @@ import fix_yahoo_finance as yf
 import pandas as pd
 import datetime
 
+
 @home.route('/')
-def homepage():    
+def homepage():     
 	return render_template('home/index.html', title="Welcome")
 
-@home.route('/dashboard')
+@home.route('/dashboard', methods=['GET','POST'])
 @login_required
 def dashboard():
-	return render_template('home/dashboard.html', title="Dashboard")
-
-@home.route('/plot', methods=['GET','POST'])
-@login_required
-def plot():
 	if request.method == 'POST':
 		stock = request.form['companyname']
-		startDate = datetime.datetime(2010, 1, 4).date()
+		startDate = datetime.datetime(2017, 1, 4).date()
 		endDate = datetime.datetime.now().date()
 
 		df_historical = yf.download(stock, startDate, endDate)
@@ -75,8 +71,6 @@ def plot():
 			wr.writerow(("Date", "Actual", "Forecasted"))
 			wr.writerows(export_data)
 		myfile.close()  
-
 		#return render_template("visual.html", original = round(original_end,2), forecast = round(forecast_start,2), stock_tinker = stock.upper())
-		return render_template("home/dashboard-predict.html", original = round(original_end,2), forecast = round(forecast_start,2),forecast_future = round(forecast_future,2), stock_tinker = stock.upper(), num_days=num_days, title="Plot")
-
-	
+		return render_template("home/dashboard-predict.html", original = round(original_end,2), forecast = round(forecast_start,2),forecast_future = round(forecast_future,2), stock_tinker = stock.upper(), num_days=num_days)
+	return render_template('home/dashboard.html')
