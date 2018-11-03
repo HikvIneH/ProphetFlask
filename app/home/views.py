@@ -70,7 +70,7 @@ def plot():
 		d = [date, close_data, forecasted_data]
 		export_data = izip_longest(*d, fillvalue = '')
 		
-		with open('./static/data/prediction.csv', 'wb') as myfile:
+		with open('./app/static/data/prediction.csv', 'wb') as myfile:
 			wr = csv.writer(myfile)
 			wr.writerow(("Date", "Actual", "Forecasted"))
 			wr.writerows(export_data)
