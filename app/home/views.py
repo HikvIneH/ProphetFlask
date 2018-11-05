@@ -41,7 +41,7 @@ def dashboard():
             print 'opened'
         
         #df_historical = yf.download(stock, startDate, endDate)
-        #df = df_historical.filter(['Close'])
+        df = df_historical.filter(['Close'])
         
         df['ds'] = df.index
         df['y'] = np.log(df['Close'])
