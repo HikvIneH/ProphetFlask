@@ -24,7 +24,11 @@
         </tr>
     </table>
 <!--==============================================================================================-->
-<!--
+
+window.onload = function(){
+    <script language="JavaScript" src="{{ url_for('static', filename='js/dygraph.js') }}"></script>
+  };
+
     <script type="text/javascript">
         g2 = new Dygraph(
                         document.getElementById("graph"),
@@ -46,5 +50,5 @@
                             setStatus();
                         }
     </script>
--->
+
 {% endblock %}
