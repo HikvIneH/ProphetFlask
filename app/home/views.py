@@ -56,7 +56,7 @@ def dashboard():
         else:
             with open("./app/static/data/"+sekarang+"pickle.pckl", "rb") as f:
                 model = pickle.load(f)
-                print 'opened'
+                print 'model opened'
 
         #model = Prophet()
         #model.fit(df)
