@@ -32,15 +32,15 @@ def dashboard():
         startDate = datetime.datetime(2010, 1, 4).date()
         endDate = datetime.datetime.now().date()
         sekarang = str(startDate)+"TO"+str(endDate)
-        
+        '''
         if os.path.isfile("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv") == False: 
             df_historical = yf.download(stock, startDate, endDate)
             df_historical.to_csv("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv")
         else:
             df_historical = pd.read_csv("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv")
             print 'opened'
-        
-        #df_historical = yf.download(stock, startDate, endDate)
+        '''
+        df_historical = yf.download(stock, startDate, endDate)
         df = df_historical.filter(['Close'])
         
         df['ds'] = df.index
@@ -90,7 +90,7 @@ def dashboard():
             wr = csv.writer(myfile)
             wr.writerow(("Date", "Actual", "Forecasted"))
             wr.writerows(export_data)
-        myfile.close()  
+        #myfile.close()  
         #return render_template("visual.html", original = round(original_end,2), forecast = round(forecast_start,2), stock_tinker = stock.upper())
         return render_template("home/dashboard-predict.html", original = round(original_end,2), forecast = round(forecast_start,2),forecast_future = round(forecast_future,2), stock_tinker = stock.upper(), num_days=num_days)
     return render_template('home/dashboard.html')
