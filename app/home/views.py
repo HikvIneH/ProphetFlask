@@ -32,16 +32,16 @@ def dashboard():
         startDate = datetime.datetime(2010, 1, 4).date()
         endDate = datetime.datetime.now().date()
         sekarang = str(startDate)+"TO"+str(endDate)
-        '''
+        
         if os.path.isfile("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv") == False: 
             df_historical = yf.download(stock, startDate, endDate)
             df_historical.to_csv("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv")
         else:
             df_historical = pd.read_csv("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv")
             print 'opened'
-        '''
-        df_historical = yf.download(stock, startDate, endDate)
-        df = df_historical.filter(['Close'])
+        
+        #df_historical = yf.download(stock, startDate, endDate)
+        #df = df_historical.filter(['Close'])
         
         df['ds'] = df.index
         df['y'] = np.log(df['Close'])
