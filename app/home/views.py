@@ -31,7 +31,7 @@ def dashboard():
         stock = request.form['companyname']
         startDate = datetime.datetime(2010, 1, 4).date()
         endDate = datetime.datetime.now().date()
-        sekarang = str(startDate)+"TO"+str(endDate)
+        sekarang = str(startDate)+"-TO-"+str(endDate)
         '''
         if os.path.isfile("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv") == False: 
             df_historical = yf.download(stock, startDate, endDate)
@@ -48,13 +48,13 @@ def dashboard():
         original_end = df['Close'][-1]
 
         #model = Prophet(weekly_seasonality=True, daily_seasonality=True, yearly_seasonality=True)
-        if os.path.isfile("./app/static/data/"+sekarang+"pickle.pckl") == False: 
+        if os.path.isfile("./app/static/data/"+sekarang+stock+"pickle.pckl") == False: 
             model = Prophet()
             model.fit(df)
-            with open("./app/static/data/"+sekarang+"pickle.pckl", "wb") as f:
+            with open("./app/static/data/"+sekarang+stock+"pickle.pckl", "wb") as f:
                 pickle.dump(model, f)
         else:
-            with open("./app/static/data/"+sekarang+"pickle.pckl", "rb") as f:
+            with open("./app/static/data/"+sekarang+stock+"pickle.pckl", "rb") as f:
                 model = pickle.load(f)
                 print 'model opened'
 
