@@ -87,11 +87,11 @@ def dashboard():
         d = [date, close_data, forecasted_data]
         export_data = izip_longest(*d, fillvalue = '')
         
-        with open('./app/static/data/prediction.csv', 'wb') as myfile:
+        with open('./app/static/data/'+sekarang+stock+'prediction.csv', 'wb') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(("Date", "Actual", "Forecasted"))
             wr.writerows(export_data)
         #myfile.close()  
 
-        return render_template("home/dashboard-predict.html", original = round(original_end,2), forecast = round(forecast_start,2),forecast_future = round(forecast_future,2), stock_tinker = stock.upper(), num_days=num_days)
+        return render_template("home/dashboard-predict.html", original = round(original_end,2), forecast = round(forecast_start,2),forecast_future = round(forecast_future,2), stock_tinker = stock.upper(), num_days=num_days,sekarang=sekarang )
     return render_template('home/dashboard.html')
