@@ -32,15 +32,16 @@ def dashboard():
         startDate = datetime.datetime(2010, 1, 4).date()
         endDate = datetime.datetime.now().date()
         sekarang = str(startDate)+"-TO-"+str(endDate)
-        '''
+
         if os.path.isfile("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv") == False: 
             df_historical = yf.download(stock, startDate, endDate)
+            #df_historical = pd.DataFrame(data=df_historical)
             df_historical.to_csv("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv")
         else:
-            df_historical = pd.read_csv("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv")
-            print 'opened'
-        '''
-        df_historical = yf.download(stock, startDate, endDate)
+            df_historical = pd.read_csv("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv", index_col=[0])
+            print 'DataFrame Opened'
+        
+        #df_historical = yf.download(stock, startDate, endDate)
         df = df_historical.filter(['Close'])
         
         df['ds'] = df.index
@@ -56,16 +57,16 @@ def dashboard():
         else:
             with open("./app/static/data/"+sekarang+stock+"pickle.pckl", "rb") as f:
                 model = pickle.load(f)
-                print 'model opened'
+                print 'Model Opened'
 
         #model = Prophet()
         #model.fit(df)
 
-        num_days = 7
+        num_days = 30
         future = model.make_future_dataframe(periods=num_days)
         forecast = model.predict(future)
     
-        print (forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+        print (forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].head())
 
         df.set_index('ds', inplace=True)
         forecast.set_index('ds', inplace=True)
@@ -78,7 +79,7 @@ def dashboard():
         date = future['ds']
         #date = p_df.index[-plot_num:-1]
         forecast_start = forecasted_data[-1]
-        forecast_future = forecasted_data[-8]
+        forecast_future = forecasted_data[-31]
         
         #y_hatx = np.exp(p_df['yhat']['2018-10-25':])
         #y_hat = np.exp(p_df['yhat'][-8:])
@@ -91,6 +92,6 @@ def dashboard():
             wr.writerow(("Date", "Actual", "Forecasted"))
             wr.writerows(export_data)
         #myfile.close()  
-        #return render_template("visual.html", original = round(original_end,2), forecast = round(forecast_start,2), stock_tinker = stock.upper())
+
         return render_template("home/dashboard-predict.html", original = round(original_end,2), forecast = round(forecast_start,2),forecast_future = round(forecast_future,2), stock_tinker = stock.upper(), num_days=num_days)
     return render_template('home/dashboard.html')
