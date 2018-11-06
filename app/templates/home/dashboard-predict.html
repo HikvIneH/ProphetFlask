@@ -24,12 +24,12 @@
         </tr>
     </table>
 <!--==============================================================================================-->
-
-window.onload = function(){
+{% block javascript %}
     <script language="JavaScript" src="{{ url_for('static', filename='js/dygraph.js') }}"></script>
-  };
+{% endblock %}
 
     <script type="text/javascript">
+        window.onload = function(){
         g2 = new Dygraph(
                         document.getElementById("graph"),
                         // CSV or path to a CSV file.
@@ -49,6 +49,7 @@ window.onload = function(){
                             g2.setVisibility(parseInt(el.id), el.checked);
                             setStatus();
                         }
+                    };
     </script>
 
 {% endblock %}
