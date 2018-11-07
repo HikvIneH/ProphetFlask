@@ -33,14 +33,13 @@ def dashboard():
 		endDate = datetime.datetime.now().date()
 		sekarang = str(startDate)+"-TO-"+str(endDate)+"-"
 
-		if os.path.isfile("./app/static/data/yahoostocks/"+sekarang+stock+".csv") == True: 
-			df_historical = pd.read_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv", index_col=[0])
-			print 'DataFrame Opened'            
-		else:
+		if os.path.isfile("./app/static/data/yahoostocks/"+sekarang+stock+".csv") == False: 
 			df_historical = yf.download(stock, startDate, endDate)
-			#df_historical = pd.DataFrame(data=df_historical)
-			df_historical.to_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv")
-					
+			df_historical.to_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv")			            
+		else:
+			df_historical = pd.read_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv", index_col=[0])
+			print 'DataFrame Opened'
+
 		#df_historical = yf.download(stock, startDate, endDate)
 		df = df_historical.filter(['Close'])
 		
