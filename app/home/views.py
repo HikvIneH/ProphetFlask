@@ -31,14 +31,14 @@ def dashboard():
         stock = request.form['companyname']
         startDate = datetime.datetime(2010, 1, 4).date()
         endDate = datetime.datetime.now().date()
-        sekarang = str(startDate)+"-TO-"+str(endDate)
+        sekarang = str(startDate)+"-TO-"+str(endDate)+"-"
 
-        if os.path.isfile("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv") == False: 
+        if os.path.isfile("./app/static/data/yahoostocks/"+sekarang+stock+".csv") == False: 
             df_historical = yf.download(stock, startDate, endDate)
             #df_historical = pd.DataFrame(data=df_historical)
-            df_historical.to_csv("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv")
+            df_historical.to_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv")
         else:
-            df_historical = pd.read_csv("./app/static/data/"+stock+'-'+str(startDate)+'to'+str(endDate)+".csv", index_col=[0])
+            df_historical = pd.read_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv", index_col=[0])
             print 'DataFrame Opened'
         
         #df_historical = yf.download(stock, startDate, endDate)
@@ -49,13 +49,13 @@ def dashboard():
         original_end = df['Close'][-1]
 
         #model = Prophet(weekly_seasonality=True, daily_seasonality=True, yearly_seasonality=True)
-        if os.path.isfile("./app/static/data/"+sekarang+stock+"pickle.pckl") == False: 
+        if os.path.isfile("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl") == False: 
             model = Prophet()
             model.fit(df)
-            with open("./app/static/data/"+sekarang+stock+"pickle.pckl", "wb") as f:
+            with open("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl", "wb") as f:
                 pickle.dump(model, f)
         else:
-            with open("./app/static/data/"+sekarang+stock+"pickle.pckl", "rb") as f:
+            with open("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl", "rb") as f:
                 model = pickle.load(f)
                 print 'Model Opened'
 
@@ -87,7 +87,7 @@ def dashboard():
         d = [date, close_data, forecasted_data]
         export_data = izip_longest(*d, fillvalue = '')
         
-        with open('./app/static/data/'+sekarang+stock+'prediction.csv', 'wb') as myfile:
+        with open('./app/static/data/predictions/'+sekarang+stock+'-prediction.csv', 'wb') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(("Date", "Actual", "Forecasted"))
             wr.writerows(export_data)
