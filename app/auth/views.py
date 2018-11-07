@@ -17,15 +17,11 @@ def register():
                             last_name=form.last_name.data,
                             password=form.password.data)
 
-        # add employee to the database
         db.session.add(user)
         db.session.commit()
         flash('You have successfully registered! You may now login.')
 
-        # redirect to the login page
         return redirect(url_for('auth.login'))
-
-    # load registration template
     return render_template('auth/register.html', form=form, title='Register')
 
 
@@ -33,18 +29,15 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-
-        # check whether employee exists in the database and whether
-        # the password entered matches the password in the database
         user = User.query.filter_by(username=form.username.data).first()
         if user is not None and user.verify_password(
                 form.password.data):
-            # log employee in
+            # log in
             login_user(user)
             return redirect(url_for('home.dashboard'))
         # when login details are incorrect
         else:
-            flash('Invalid email or password.')
+            flash('Invalid username or password.')
 
     # load login template
     return render_template('auth/login.html', form=form, title='Login') 
