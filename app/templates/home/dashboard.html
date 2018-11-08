@@ -11,16 +11,16 @@
 {{ utils.flashed_messages() }}
 <div class="jumbotron text-center">
   <div>
-  <h1 class="text-center" style = "font-family: cursive; font-size: 35px; color:rgb(224, 66, 106);"">Enter the prediction details</h1>
-    <br/>
+  <h1 class="text-center" style = "font-family: cursive; margin-top:0px ;font-size: 35px; color:rgb(224, 66, 106);"">Enter the prediction details</h1>
+  <a href="https://finance.yahoo.com/most-active" target="_blank">Full list of stock symbol can be found here</a>
     <form class = "form-horizontal form-group" method="post" role = "form" action="{{ url_for('home.dashboard') }}">
-        <div class="col-md-6 col-md-offset-3 text-center">    
+        <div class="col-md-6 col-md-offset-3 text-center" style="margin-top: 25px">    
         {{ wtf.quick_form(form) }}
-        <button class="btn btn-primary" name='process' type="submit">Submit</button>
+        <button class="btn btn-primary" style="margin-bottom: 25px" name='process' type="submit">Submit</button>
         </div>
     </form>
 </div>
-<marquee class="bottombar">Machine Learning is not a prophecy. Use at your own risk.</marquee>
+<marquee style="margin-bottom: 5px">Machine Learning is not a prophecy. Use at your own risk. Data are generated through Yahoo Finance.</marquee>
 
 
 {% endblock %}

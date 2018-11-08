@@ -1,8 +1,6 @@
 {% extends 'layout.html' %}
 {% include '/home/header.html' %}
-
 {% block body %}
-    
 <!--==============================================================================================-->    
     <table class="container">
         <tr>
@@ -18,7 +16,7 @@
                     <input type=checkbox id="0" checked onClick="change(this)">
                         <label for="0"> <font color="008000">Actual</font></label>
                     <input type=checkbox id="1" checked onClick="change(this)">
-                        <label for="1"> <font color="#000080">Forecasted</font></label>
+                        <label for="1"> <font color="#000080">Forecasted</font></label>    
                 </div>
             </td>
         </tr>
@@ -27,7 +25,6 @@
 {% block javascript %}
     <script language="JavaScript" src="{{ url_for('static', filename='js/dygraph.js') }}"></script>
 {% endblock %}
-
     <script type="text/javascript">
         window.onload = function(){
         g2 = new Dygraph(

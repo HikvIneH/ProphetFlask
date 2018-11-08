@@ -19,6 +19,14 @@
           {% else %}          
           {% endif %}
         </ul>
+        <!--
+        <ul class="nav navbar-nav">
+          {% if not stock_tinker and current_user.is_authenticated %}
+          <li><a href="https://finance.yahoo.com/most-active" target="_blank">List of stock symbols</a></li>
+          {% else %}          
+          {% endif %}
+        </ul>
+      -->
 
         <ul class="nav navbar-nav">
           {% if stock_tinker and original %}
