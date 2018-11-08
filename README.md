@@ -8,7 +8,7 @@ My first taste of Flask was using fbprophet to run time-series prediction.
 This is it.
 
 I used fix-yahoo-finance to get yahoo historical data [ranaroussi](https://github.com/ranaroussi).
-and for predicting time-series, I used prophet from [facebook](https://facebook.github.io/prophet)
+and for predicting time-series, I used prophet from [facebook](https://facebook.github.io/prophet) with graph from [dygraph](https://github.com/danvk/dygraphs).
 
 There are probably better ways to do this.
 
