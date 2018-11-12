@@ -23,14 +23,15 @@ def create_app(config_name):
         app = Flask(__name__, instance_relative_config=True)
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         app.config.from_object(app_config[config_name])
+        #app.config.from_object('config.DevelopmentConfig')
         app.config.from_pyfile('config.py')
-
+    
     Bootstrap(app)
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
     migrate = Migrate(app, db)
-
+    
     from app import models
 
     from .auth import auth as auth_blueprint

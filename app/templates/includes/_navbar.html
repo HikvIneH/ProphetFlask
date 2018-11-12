@@ -1,6 +1,6 @@
-<!--<nav class="navbar navbar-expand-lg navbar-light bg-light"></nav>-->
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->
 <nav class="navbar navbar-default">
-    <div class="container">
+    <!--<div class="container">-->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
@@ -12,30 +12,30 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          {% if stock_tinker and original %}
+          {% if stock_tinker and original or filename %}
           <li><a href="{{ url_for('home.dashboard') }}">Dashboard</a></li>
           <!--<li><a href="/about">About</a></li>-->
           <!--<li><a >History</a></li>-->
           {% else %}          
           {% endif %}
         </ul>
-        <!--
+        
         <ul class="nav navbar-nav">
-          {% if not stock_tinker and current_user.is_authenticated %}
-          <li><a href="https://finance.yahoo.com/most-active" target="_blank">List of stock symbols</a></li>
-          {% else %}          
-          {% endif %}
-        </ul>
-      -->
-
-        <ul class="nav navbar-nav">
-          {% if stock_tinker and original %}
+          {% if stock_tinker and original  %}
           <li class="nav-item"><a><font color="grey">Symbol </font>
             <script type="text/javascript">
             document.write("<center><b><font color=\"grey\"><font size=\"2\">  {{ stock_tinker }}  </font><\/font></b></center>");
             </script>
           </a></li>
-          
+          {% elif filename %}
+          <li class="nav-item"><a><font color="grey">Filename </font>
+            <script type="text/javascript">
+            document.write("<center><b><font color=\"grey\"><font size=\"2\">  {{ filename }}  </font><\/font></b></center>");
+            </script>
+          </a></li>     
+          {% endif %}
+
+          {% if stock_tinker and original or filename %}
           <li class="nav-item"><a>
             <font color="grey">Current Close</font>
             <script type="text/javascript">
@@ -51,15 +51,14 @@
               document.write("<center><b><font color=\"red\"><font size=\"2\">  {{forecast_future}}  </font><\/font></b></center>");
             </script>
           </a></li>  
-          
-          <li><a>
+
           <li><a>          
             <font color="grey">Tomorrow {{ num_days }} Days Prediction</font>
             <script type="text/javascript">
             document.write("<center><b><font color=\"grey\"><font size=\"2\">  {{forecast}}  </font><\/font></b></center>");
             </script>
             </a></li>
-          {% else %}          
+          {% else %} 
           {% endif %}
         </ul>
         
@@ -80,5 +79,5 @@
 
         </ul>
       </div><!--/.nav-collapse -->
-    </div>
+    <!--</div><!--/container-->
   </nav>

@@ -8,7 +8,8 @@
       <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">Register</a>
       <a href="{{ url_for('auth.login') }}" class="btn btn-success btn-lg">Login</a>
     {% else %}
-    <a href="{{ url_for('home.dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+    <a href="{{ url_for('home.analyzeManually') }}" class="btn btn-primary btn-lg">Analyze CSV Manually</a>
+    <a href="{{ url_for('home.analyzeFromYahoo') }}" class="btn btn-primary btn-lg">Predict Yahoo Finance</a>
     {% endif %}
 <!--
     <div class="row">

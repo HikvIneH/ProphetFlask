@@ -1,0 +1,30 @@
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+<small>Welcome 
+    <script type="text/javascript">
+    document.write("<left><b><font color=\"grey\"><font size=\"2\">  {{ current_user.username }}  </font><\/font></b></left>");
+    </script>
+</small>
+{{ utils.flashed_messages() }}
+<div class="jumbotron">
+  <div class="container">
+  <h1 class="text-center" style = "font-family: cursive; margin-top:0px ;font-size: 35px; color:rgb(224, 66, 106);"">Enter details to be downloaded from Yahoo Finance</h1>
+    <div class="text-center">
+        <a class="text-center" href="https://finance.yahoo.com/most-active" target="_blank">Full list of stock symbol can be found here</a>
+    </div>
+    <form class = "form-horizontal form-group" method="post" role = "form" action="{{ url_for('home.analyzeFromYahoo') }}">
+        <div class="col-md-4 col-md-offset-4" style="margin-top: 25px">    
+            {{ wtf.quick_form(form) }}
+            <div class="text-center">
+                <button class="btn btn-primary" style="margin-bottom: 25px;" name='process' type="submit">Submit</button>
+            </div> 
+        </div>
+    </form>
+</div>
+<marquee style="margin-bottom: 5px">Machine Learning is not a prophecy. Use at your own risk. Data are generated through Yahoo Finance.</marquee>
+
+
+{% endblock %}

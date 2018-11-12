@@ -1,0 +1,95 @@
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    
+{% endblock %}
+
+{% block body %}
+<small>Welcome 
+    <script type="text/javascript">
+    document.write("<left><b><font color=\"grey\"><font size=\"2\">  {{ current_user.username }}  </font><\/font></b></left>");
+    </script>
+</small>
+<script>
+    function outputUpdate(num_days_ahead) {
+        document.querySelector('#selected-days').value = num_days_ahead;
+    }
+</script>
+
+{{ utils.flashed_messages() }}
+<div class="jumbotron text-center">
+  <div class="row">
+  <h1 class="text-center" style = "font-family: cursive; margin-top:0px ;font-size: 35px; color:rgb(224, 66, 106);"">Enter prediction details</h1>
+
+<style type="text/css">
+    #browsebutton {
+    background-color: white;
+    }
+    #my-file-selector {
+    display: None;
+    }
+</style>
+        <!--
+        <form class="form-inline center-block" action="{{ url_for('home.analyzeManually') }}" method="POST" role ="form" enctype="multipart/form-data">
+            <div class="row">
+                    {{ form.hidden_tag() }}
+
+                    <div class="input-group">
+                        <label id="browsebutton" class="btn btn-default input-group-addon" for="my-file-selector">
+                            {{ form.data(id="my-file-selector") }}
+                                Browse...
+                        </label>
+                        <input type="text" class="form-control" readonly="">
+                    </div>
+            
+                <div class="input-group">
+                    <div class="col-md-2">
+                        {{ wtf.form_field(form.num_days_ahead) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                    <label>Seasonality functions: </label>    
+                    {{ wtf.form_field(form.dailySeasonality) }}
+                    {{ wtf.form_field(form.weeklySeasonality) }}
+                    {{ wtf.form_field(form.yearlySeasonality) }}        
+            </div>
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+        -->        
+    
+        <form class="form-inline center-block" action="{{ url_for('home.analyzeManually') }}" method="POST" role ="form" enctype="multipart/form-data">
+            <div class="row" style="margin-top: 25px">
+                <div class="input-group">
+                    {{ wtf.form_field(form.data) }}
+                </div>
+                
+                <div class="input-group">
+                    {{ form.num_days_ahead.label }}:
+                    {{ form.num_days_ahead(min=1, max=50, oninput="outputUpdate(value)") }}
+                    <output for="num_days_ahead" id="selected-days">{{ form.num_days_ahead.data }}</output>
+                </div>
+            </div>
+
+            <div class="row">
+                <label>Seasonality functions: </label>    
+                {{ wtf.form_field(form.dailySeasonality) }}
+                {{ wtf.form_field(form.weeklySeasonality) }}
+                {{ wtf.form_field(form.yearlySeasonality) }}        
+            </div>
+            
+            <button class="btn btn-primary" style="margin-bottom: 25px" name='process' type="submit">Submit</button>
+        
+        </form>
+        <br/><br/><br/><br/><br/>
+    </div> 
+    <marquee style="margin-bottom: 5px">Machine Learning is not a prophecy. Process with cautions.</marquee>  
+</div>
+  
+</div>
+{% endblock %}

@@ -1,16 +1,32 @@
 {% import "bootstrap/utils.html" as utils %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% extends "layout.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}
+Login
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
 {% block body %}
-<div class="content-section">
-  <br/>
-  {{ utils.flashed_messages() }}
-  <br/>
-  <div class="center">
-    <h1>Login to your account</h1>
-    <br/>
-    {{ wtf.quick_form(form) }}
-  </div>
-</div>
+    <div class="container">
+        {{ utils.flashed_messages() }}
+        <br/>
+
+      <form method="POST" action="{{url_for('auth.login')}}">
+        <div class="col-md-3 col-md-offset-4" style="margin-top: 25px">
+        <h2 >Sign In</h2>
+        
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.username) }}
+        {{ wtf.form_field(form.password) }}
+        
+        <!--{{ wtf.quick_form(form) }}-->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </div>
+      </form>
+
+    </div> <!-- /container -->
 {% endblock %}

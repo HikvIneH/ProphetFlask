@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% include '/home/header.html' %}
+{% block body %}
+<!--==============================================================================================-->    
+    <table class="container">
+        <tr>
+            <td>
+                <div id="graph" style="width:1075px; height:500px;" class="graph"></div>
+            </td>
+            
+        </tr>
+        <tr>
+            <td>
+                <div class = "labels" align="center">
+                    Show Data:
+                    <input type=checkbox id="0" checked onClick="change(this)">
+                        <label for="0"> <font color="008000">Actual</font></label>
+                    <input type=checkbox id="1" checked onClick="change(this)">
+                        <label for="1"> <font color="#000080">Forecasted</font></label>    
+                </div>
+            </td>
+        </tr>
+    </table>
+<!--==============================================================================================-->
+    <script type="text/javascript">
+        window.onload = function(){
+        g2 = new Dygraph(
+                        document.getElementById("graph"),
+                        // CSV or path to a CSV file.
+                        "{{ url_for('static', filename='data/predictions/explore/')}}{{filename}}-prediction.csv" , // path to CSV file
+                        //"./app/static/data/prediction.csv",
+                        //"{{ url_for('static', filename='data/predictions/hehe.csv')}}",
+                        {
+                        visibility: [true, true],
+                        }        
+                        );
+        setStatus();
+                         
+        function setStatus() {
+                            document.getElementById("visibility").innerHTML =
+                            g2.visibility().toString();
+                        }
+        function change(el) {
+                            g2.setVisibility(parseInt(el.id), el.checked);
+                            setStatus();
+                        }
+                    };
+    </script>
+{% block javascript %}
+<script language="JavaScript" src="{{ url_for('static', filename='js/dygraph.js') }}"></script>
+{% endblock %}
+
+{% endblock %}
