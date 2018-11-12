@@ -116,7 +116,7 @@ def analyzeFromYahoo():
 		plotFile = plotFile.rename(index=str, columns={"Close": "Actual", "yhat_scaled": "Forecasted"})
 		plotFile.index.names = ['date']
 		plotFile.tail()
-		plotFile.to_csv('./app/static/data/predictions/'+sekarang+stock+'-'+str(num_days)+'-prediction.csv', na_rep='nan')
+		plotFile.to_csv('./app/static/data/predictions/predict/'+sekarang+stock+'-'+str(num_days)+'-prediction.csv', na_rep='nan')
 
 		return render_template("home/plot.html", original = round(original_end,2), 
 								forecast = round(forecast_start,2),

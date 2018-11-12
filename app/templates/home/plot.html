@@ -30,7 +30,7 @@
         g2 = new Dygraph(
                         document.getElementById("graph"),
                         // CSV or path to a CSV file.
-                        "{{ url_for('static', filename='data/predictions/')}}{{sekarang}}{{stock_tinker}}-{{num_days}}-prediction.csv", // path to CSV file
+                        "{{ url_for('static', filename='data/predictions/predict/')}}{{sekarang}}{{stock_tinker}}-{{num_days}}-prediction.csv", // path to CSV file
                         //"./app/static/data/prediction.csv",
                         {
                         visibility: [true, true],
