@@ -62,8 +62,8 @@ def analyzeFromYahoo():
 		original_end = df['Close'][-1]
 
 		#model = Prophet(weekly_seasonality=True, dail y_seasonality=True, yearly_seasonality=True)
-		if os.path.isfile("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl") == True: 
-			with open("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl", "rb") as f:
+		if os.path.isfile(u"./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl") == True: 
+			with open(u"./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl", "rb") as f:
 				model = pickle.load(f)
 				print 'Model Opened'            
 		else:
