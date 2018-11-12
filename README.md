@@ -25,6 +25,10 @@ export your configs:
 ```
 export FLASK_APP=run.py
 export FLASK_CONFIG=development
+```
+
+you can create an instance folder with your SQLAlchemy config:
+```
 export SQLALCHEMY_DATABASE_URI='your database'
 export SECRET_KEY='yoursecretkey'
 ```
