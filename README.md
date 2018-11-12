@@ -2,8 +2,7 @@ Analison
 ===================
 can't find any proper name yet
 
-
-My first taste of Flask was using fbprophet to run time-series prediction.
+Flask using fbprophet to run time-series prediction.
 
 This is it.
 
