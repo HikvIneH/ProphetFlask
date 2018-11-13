@@ -5,3 +5,4 @@ __pycache__
 *.pckl
 old/
 *.old
+.ipynb_checkpoints
