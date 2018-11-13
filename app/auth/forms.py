@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, Email, EqualTo
 from ..models import User
 
 
-class RegistrationForm(FlaskForm):
+class SignUpForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[
@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Username is already in use.')
 
 
-class LoginForm(FlaskForm):
+class SignInForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     #submit = SubmitField('Login')

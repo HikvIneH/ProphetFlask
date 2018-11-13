@@ -1,8 +1,9 @@
 {% import "bootstrap/utils.html" as utils %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% extends "layout.html" %}
+
 {% block title %}
-Login
+Sign In
 {% endblock %}
 
 {% block styles %}
@@ -15,7 +16,7 @@ Login
         {{ utils.flashed_messages() }}
         <br/>
 
-      <form method="POST" action="{{url_for('auth.login')}}">
+      <form method="POST" action="{{url_for('auth.signin')}}">
         <div class="col-md-3 col-md-offset-4" style="margin-top: 25px">
         <h2 >Sign In</h2>
         

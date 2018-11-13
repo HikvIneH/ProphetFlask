@@ -45,6 +45,5 @@ class UploadForm(FlaskForm):
 	dailySeasonality = BooleanField('daily')
 	weeklySeasonality = BooleanField('weekly')
 	yearlySeasonality = BooleanField('yearly')
-	submit = SubmitField(label="Process")
-	
+	#submit = SubmitField(label="Process")
 

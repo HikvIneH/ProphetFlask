@@ -1,0 +1,81 @@
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    
+        
+{% endblock %}
+
+{% block body %}
+
+<style>
+    .parent-container {
+   display: flex;}
+</style>
+
+<script>
+    function outputUpdate(num_days_ahead) {
+        document.querySelector('#selected-days').value = 'Future data forecasted: ' + num_days_ahead + ' days';
+    }   
+</script>
+
+<small>Welcome 
+    <script type="text/javascript">
+    document.write("<left><b><font color=\"grey\"><font size=\"2\">  {{ current_user.username }}  </font><\/font></b></left>");
+    </script>
+</small>
+
+{{ utils.flashed_messages() }}
+<div class="jumbotron ">
+        <h1 class="text-center" style = "font-family: cursive;
+        margin-top:0px ;
+        font-size: 35px;
+        color:rgb(224, 66, 106);">
+        Enter prediction details</h1><br/>
+    <div class="parent-container">    
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-offset-4">
+                    <form class="form-inline center-block"  action="{{ url_for('main.analyzeManually') }}" method="POST" role ="form" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <h5>Upload csv: </h5>
+                            {{form.data}}<br/>        
+                        </div>
+                    
+                        <div class="input-group">
+                            <output for="num_days_ahead" id="selected-days">Future data forecasted :  {{ form.num_days_ahead.data }} day</output>
+                            
+                            {{ form.num_days_ahead(min=1, max=60, oninput="outputUpdate(value)") }}<br/>
+                            
+                        </div>
+                        
+                        <h5 class="margin-bottom:25px;">Seasonality functions:<br/>     
+                        {{ wtf.form_field(form.dailySeasonality) }}
+                        {{ wtf.form_field(form.weeklySeasonality) }}
+                        {{ wtf.form_field(form.yearlySeasonality) }}
+                        </h5>
+                        <button class="btn btn-primary" style="margin-bottom: 25px; margin-top: 25px" name='process' type="submit">Submit</button>
+                    </form>    
+                </div>
+            </div>
+        </div>
+            
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5>*Review your .csv file</h5>
+                    <h5>Change your targetted value to 'Target' like the picture below</h5>
+                    <h5>Airline Passengers data:</h5>
+                    <img src="/static/img/airline.png"></img>
+                    <h5>Changed to this:</h5>
+                    <img src="/static/img/airline2.png" ></img>
+                </div>
+            </div>
+        </div>
+    </div>
+    <marquee style="margin-bottom: 5px">Machine Learning is not a prophecy. Process with cautions.</marquee>  
+</div>
+{% endblock %}

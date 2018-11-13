@@ -1,5 +1,9 @@
 {% extends 'layout.html' %}
-{% include '/home/header.html' %}
+{% include '/main/header.html' %}
+{% block head %}
+    {{ super() }}
+    <title> {{ stock_tinker }} </title> 
+{% endblock %}
 {% block body %}
 <!--==============================================================================================-->    
     <table class="container">

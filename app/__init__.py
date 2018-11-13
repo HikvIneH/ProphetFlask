@@ -29,7 +29,7 @@ def create_app(config_name):
     Bootstrap(app)
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = "auth.login"
+    login_manager.login_view = "auth.signin"
     migrate = Migrate(app, db)
     
     from app import models
@@ -37,8 +37,8 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    from .home import home as home_blueprint
-    app.register_blueprint(home_blueprint)
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
 
     from .errors import errors as errors_blueprint
     app.register_blueprint(errors_blueprint)

@@ -1,7 +1,7 @@
 from flask import render_template, request
 from flask_login import login_required, current_user
 
-from . import home
+from . import main
 from forms import DashboardForm
 from forms import UploadForm
 
@@ -18,21 +18,21 @@ import os.path
 import math as math
 import csv
 from math import sqrt
-from itertools import izip_longest
+#from itertools import izip_longest
 import pickle
 
 import fix_yahoo_finance as yf
 import pandas as pd
 import datetime
 
-@home.route('/')
-@home.route('/dashboard')
-@home.route('/dashboard/')
+@main.route('/')
+@main.route('/dashboard')
+@main.route('/dashboard/')
 def dashboard():     
-	return render_template('home/index.html', title="Welcome")
+	return render_template('main/index.html', title="Welcome")
 
-@home.route('/dashboard/predict', methods=['GET','POST'])
-@home.route('/dashboard/predict/', methods=['GET','POST'])
+@main.route('/dashboard/predict', methods=['GET','POST'])
+@main.route('/dashboard/predict/', methods=['GET','POST'])
 @login_required
 def analyzeFromYahoo():
 	form = DashboardForm(csrf_enabled=False)
@@ -94,7 +94,7 @@ def analyzeFromYahoo():
 		#date = p_df.index[-plot_num:-1]
 		forecast_start = forecasted_data[-1]
 		forecast_future = forecasted_data[-(int(num_days)+1)]
-		aaa = stock
+
 		#y_hatx = np.exp(p_df['yhat']['2018-10-25':])
 		#y_hat = np.exp(p_df['yhat'][-8:])
 		'''
@@ -118,16 +118,17 @@ def analyzeFromYahoo():
 		plotFile.tail()
 		plotFile.to_csv('./app/static/data/predictions/predict/'+sekarang+stock+'-'+str(num_days)+'-prediction.csv', na_rep='nan')
 
-		return render_template("home/plot.html", original = round(original_end,2), 
+		return render_template("main/plot.html", original = round(original_end,2), 
 								forecast = round(forecast_start,2),
 								forecast_future = round(forecast_future,2),
 								stock_tinker = stock.upper(),
-								num_days=num_days,sekarang=sekarang
+								num_days=num_days,sekarang=sekarang,
+								title='forecasting result of '+stock
 								)
-	return render_template('home/predict.html',form=form, title='Predict')
+	return render_template('main/predict.html',form=form, title='Predict from Yahoo Finance')
 
-@home.route('/dashboard/explore', methods=['GET','POST'])
-@home.route('/dashboard/explore/', methods=['GET','POST'])
+@main.route('/dashboard/explore', methods=['GET','POST'])
+@main.route('/dashboard/explore/', methods=['GET','POST'])
 @login_required
 def analyzeManually():
 	form = UploadForm(csrf_enabled=False)
@@ -143,12 +144,12 @@ def analyzeManually():
 
 		df_historical = pd.read_csv(f, index_col=[0])
 		df = pd.DataFrame(data=df_historical)
-		df = df_historical.filter(['Close'])
+		df = df_historical.filter(['Target'])
 		
 		df['ds'] = df.index
-		df['y'] = np.log(df['Close'])
+		df['y'] = np.log(df['Target'])
 		#df['y'] = np.log(df[-1])
-		original_end = df['Close'][-1]
+		original_end = df['Target'][-1]
 		model = Prophet(daily_seasonality=daily, weekly_seasonality=weekly, yearly_seasonality=yearly)
 		model.fit(df)
 
@@ -163,7 +164,7 @@ def analyzeManually():
 		p_df = df.join(forecast[['yhat', 'yhat_lower','yhat_upper']], how = 'outer')
 		p_df['yhat_scaled'] = np.exp(p_df['yhat'])
 
-		close_data = p_df.Close
+		close_data = p_df.Target
 		forecasted_data = p_df.yhat_scaled
 		date = future['ds']
 		#date = p_df.index[-plot_num:-1]
@@ -177,7 +178,7 @@ def analyzeManually():
 		forecasted_data = pd.DataFrame(forecasted_data)
 
 		plotFile = close_data.join(forecasted_data, how = 'outer')
-		plotFile = plotFile.rename(index=str, columns={"Close": "Actual", "yhat_scaled": "Forecasted"})
+		plotFile = plotFile.rename(index=str, columns={"Target": "Actual", "yhat_scaled": "Forecasted"})
 		plotFile.index.names = ['date']
 		plotFile.tail()
 		plotFile.to_csv('./app/static/data/predictions/explore/'+str(filename).upper()+'-prediction.csv', na_rep='nan')
@@ -201,10 +202,10 @@ def analyzeManually():
 		#db.session.commit()
 		
 
-		return render_template("home/plot_explore.html", original = round(original_end,2), 
+		return render_template("main/plot_explore.html", original = round(original_end,2), 
 								forecast = round(forecast_start,2),
 								forecast_future = round(forecast_future,2),
 								filename = filename.upper(),
-								num_days=num_days
+								num_days=num_days, title='forecasting result of ' + filename
 								)
-	return render_template('home/explore.html', form=form, title='Explore')
+	return render_template('main/explore.html', form=form, title='Upload csv')

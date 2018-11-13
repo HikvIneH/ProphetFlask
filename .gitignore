@@ -1,3 +1,7 @@
 *.pyc
 instance/
 __pycache__
+*.csv
+*.pckl
+old/
+*.old
