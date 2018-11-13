@@ -3,13 +3,13 @@
 {% block body %}
   <div class="jumbotron text-center">
     <h1>Welcome</h1>
-    <p class="lead">This application is built on the Python Flask, a python microframework and is focused to implement fbprophet for stock data forecasting and good intentions.</p>
+    <p class="lead">This application is built on Flask, a python microframework and is focused to implement fbprophet for stock data forecasting and good intentions.</p>
     {% if not current_user.is_authenticated %}
       <a href="{{ url_for('auth.signup') }}" class="btn btn-primary btn-lg">Sign Up</a>
       <a href="{{ url_for('auth.signin') }}" class="btn btn-success btn-lg">Sign In</a>
     {% else %}
-    <a href="{{ url_for('main.analyzeManually') }}" class="btn btn-primary btn-lg">Analyze CSV Manually</a>
-    <a href="{{ url_for('main.analyzeFromYahoo') }}" class="btn btn-primary btn-lg">Predict Yahoo Finance</a>
+    <a href="{{ url_for('main.analyzeManually') }}" class="btn btn-primary btn-lg">Forecast from your own csv</a>
+    <a href="{{ url_for('main.analyzeFromYahoo') }}" class="btn btn-primary btn-lg">Forecast Yahoo Finance</a>
     {% endif %}
 <!--
     <div class="row">
