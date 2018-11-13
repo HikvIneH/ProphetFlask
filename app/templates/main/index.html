@@ -3,7 +3,7 @@
 {% block body %}
   <div class="jumbotron text-center">
     <h1>Welcome</h1>
-    <p class="lead">This application is built on the Python Flask framework and is focused to implement fbprophet for stock market forecasting.</p>
+    <p class="lead">This application is built on the Python Flask, a python microframework and is focused to implement fbprophet for stock data forecasting and good intentions.</p>
     {% if not current_user.is_authenticated %}
       <a href="{{ url_for('auth.signup') }}" class="btn btn-primary btn-lg">Sign Up</a>
       <a href="{{ url_for('auth.signin') }}" class="btn btn-success btn-lg">Sign In</a>
