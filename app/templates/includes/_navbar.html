@@ -46,13 +46,13 @@
 
           {% if stock_tinker and original or filename %}
           <li class="nav-item"><a>
-            <font color="grey">Current Close</font>
+            <font color="grey">Current</font> 
             <script type="text/javascript">
                 document.write("<center><b><font color=\"grey\"><font size=\"2\">  {{original}}  </font><\/font></b></center>");
             </script>
           </a></li>
           <li><a>
-            <font color="grey">Current Close Prediction</font>
+            <font color="grey">Prediction</font>
             <script type="text/javascript">
             if ({{forecast}} > {{original}})
                 document.write("<center><b><font color=\"green\"><font size=\"2\">  {{forecast_future}}  </font><\/font></b></center>");
