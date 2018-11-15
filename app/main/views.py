@@ -55,7 +55,7 @@ def analyzeFromYahoo():
 				print 'success'
 				break
 			except ValueError:
-				flash('Yahoo Finance could not process your request. Please try again.')
+				flash('Yahoo Finance could not process your request. Please try again.','warning')
 				return render_template('main/predict.html',form=form, title='Predict from Yahoo Finance')
 		else:
 			df_historical = pd.read_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv", index_col=[0])
@@ -149,9 +149,22 @@ def analyzeManually():
 		num_days = form.num_days_ahead.data
 		print filename, daily, weekly, yearly, num_days
 
-		df_historical = pd.read_csv(f, index_col=[0])
+		if True:
+			try:
+				df_historical = pd.read_csv(f, index_col=[0])
+				if 'Target' in list(df_historical):
+					df = df_historical.filter(['Target'])
+					print 'target in list'
+				else:
+					flash('Change your csv header to Target','danger')
+					return render_template('main/explore.html', form=form, title='Upload csv')
+			except pd.errors.EmptyDataError as e:
+				flash(e,'danger')
+				return render_template('main/explore.html', form=form, title='Upload csv')
+
+		#df_historical = pd.read_csv(f, index_col=[0])
 		df = pd.DataFrame(data=df_historical)
-		df = df_historical.filter(['Target'])
+		#df = df_historical.filter(['Target'])
 		
 		df['ds'] = df.index
 		df['y'] = np.log(df['Target'])

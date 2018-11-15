@@ -16,7 +16,7 @@ def signup():
 
         db.session.add(user)
         db.session.commit()
-        flash('You have successfully registered! You may now sign in.')
+        flash('You have successfully registered! You may now sign in.','success')
 
         return redirect(url_for('auth.signin'))
     return render_template('auth/signup.html', form=form, title='Sign Up')
@@ -33,12 +33,12 @@ def signin():
             login_user(user)
             return redirect(url_for('main.dashboard'))
         else:
-            flash('Invalid username or password.')
+            flash('Invalid username or password.','danger')
     return render_template('auth/signin.html', form=form, title='Sign In') 
 
 @auth.route('/signout')
 @login_required
 def signout():
     logout_user()
-    flash('You have successfully been signed out.')
+    flash('You have successfully been signed out.','success')
     return redirect(url_for('auth.signin'))
