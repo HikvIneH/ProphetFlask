@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, flash
 from flask_login import login_required, current_user
 
 from . import main
@@ -25,9 +25,10 @@ import fix_yahoo_finance as yf
 import pandas as pd
 import datetime
 
-@main.route('/')
+
 @main.route('/dashboard')
 @main.route('/dashboard/')
+@main.route('/')
 def dashboard():     
 	return render_template('main/index.html', title="Welcome")
 
@@ -47,20 +48,26 @@ def analyzeFromYahoo():
 		startDate = datetime.datetime.strptime(str(endDate), '%Y-%m-%d').date() - datetime.timedelta(days=num_days_back)
 		sekarang = str(startDate)+"-TO-"+str(endDate)+"-"
 
-		if os.path.isfile("./app/static/data/yahoostocks/"+sekarang+stock+".csv") == False: 
-			df_historical = yf.download(stock, startDate, endDate)
-			df_historical.to_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv")
+		while os.path.isfile("./app/static/data/yahoostocks/"+sekarang+stock+".csv") == False: 
+			try: 
+				df_historical = yf.download(stock, startDate, endDate)
+				df_historical.to_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv")
+				print 'success'
+				break
+			except ValueError:
+				flash('Yahoo Finance could not process your request. Please try again.')
+				return render_template('main/predict.html',form=form, title='Predict from Yahoo Finance')
 		else:
 			df_historical = pd.read_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv", index_col=[0])
-			print 'DataFrame Opened'            
+			print 'previous searched csv used'
 					
 		#df_historical = yf.download(stock, startDate, endDate)
-		df = df_historical.filter(['Close'])
 		
+		df = df_historical.filter(['Close'])
 		df['ds'] = df.index
 		df['y'] = np.log(df['Close'])
 		original_end = df['Close'][-1]
-
+		
 		#model = Prophet(weekly_seasonality=True, dail y_seasonality=True, yearly_seasonality=True)
 		if os.path.isfile("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl") == True: 
 			with open("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl", "rb") as f:
