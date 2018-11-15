@@ -22,7 +22,7 @@
     }   
 </script>
 
-<small>Welcome 
+<small>Username 
     <script type="text/javascript">
     document.write("<left><b><font color=\"grey\"><font size=\"2\">  {{ current_user.username }}  </font><\/font></b></left>");
     </script>
@@ -42,7 +42,7 @@
                     <form class="form-inline center-block"  action="{{ url_for('main.analyzeManually') }}" method="POST" role ="form" enctype="multipart/form-data">
                         <div class="input-group">
                             <h5>Upload csv: </h5>
-                            {{form.data}}<br/>        
+                            {{ wtf.form_field(form.data)}}<br/>        
                         </div>
                     
                         <div class="input-group">
