@@ -56,6 +56,7 @@ def analyzeFromYahoo():
 				break
 			except ValueError:
 				flash('Yahoo Finance could not process your request. Please try again.','warning')
+				print 'error'
 				return render_template('main/predict.html',form=form, title='Predict from Yahoo Finance')
 		else:
 			df_historical = pd.read_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv", index_col=[0])
@@ -147,8 +148,10 @@ def analyzeManually():
 		weekly = form.weeklySeasonality.data
 		yearly = form.yearlySeasonality.data
 		num_days = form.num_days_ahead.data
+		change = form.change.data
 		print filename, daily, weekly, yearly, num_days
 
+		'''
 		if True:
 			try:
 				df_historical = pd.read_csv(f, index_col=[0])
@@ -161,7 +164,19 @@ def analyzeManually():
 			except pd.errors.EmptyDataError as e:
 				flash(e,'danger')
 				return render_template('main/explore.html', form=form, title='Upload csv')
+		'''
 
+		df_historical = pd.read_csv(f, index_col=[0])
+		try:
+			if change in list(df_historical):
+				df = df_historical.rename(columns={change:'Target'})
+			else:
+				flash('No such a column ' + change + '! Please review your file', 'danger')
+				return render_template('main/explore.html', form=form, title='Upload csv')
+		except pd.errors.EmptyDataError as e:
+			flash(e,'danger')
+			return render_template('main/explore.html', form=form, title='Upload csv')
+		
 		#df_historical = pd.read_csv(f, index_col=[0])
 		df = pd.DataFrame(data=df_historical)
 		#df = df_historical.filter(['Target'])
@@ -203,20 +218,6 @@ def analyzeManually():
 		plotFile.tail()
 		plotFile.to_csv('./app/static/data/predictions/explore/'+str(filename).upper()+'-prediction.csv', na_rep='nan')
 
-		'''
-		d = [date, close_data, forecasted_data]
-		export_data = izip_longest(*d, fillvalue = '')
-		print export_data
-		
-		
-		with open('./app/static/data/predictions/explore/'+str(filename)+'-prediction.csv' , 'wb') as myfile:
-			wr = csv.writer(myfile)
-			wr.writerow(("Date", "Actual", "Forecasted"))
-			wr.writerows(export_data)
-		#myfile.close()
-		#	print 'save csv'
-		'''
-
 		#newFile = Data(name=f.filename, data=f.read(), user_id=current_user.id)
 		#db.session.add(newFile)
 		#db.session.commit()
@@ -226,6 +227,7 @@ def analyzeManually():
 								forecast = round(forecast_start,2),
 								forecast_future = round(forecast_future,2),
 								filename = filename.upper(),
-								num_days=num_days, title='forecasting result of ' + filename
+								change = change,
+								num_days=num_days, title='forecasting result of ' + filename + '' + change
 								)
 	return render_template('main/explore.html', form=form, title='Upload csv')
