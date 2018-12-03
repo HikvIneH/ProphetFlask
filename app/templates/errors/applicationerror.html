@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block title %}Application Error{% endblock %}
+{% block body %}
+  <h1>Application Error</h1>
+  <p>Timeout process kill.
+  <p><a href="{{ url_for('main.dashboard') }}">go somewhere nice</a>
+{% endblock %}
