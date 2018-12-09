@@ -169,7 +169,7 @@ def analyzeManually():
 		df_historical = pd.read_csv(f, index_col=[0])
 		try:
 			if change in list(df_historical):
-				df = df_historical.rename(columns={change:'Target'})
+				df = df_historical.rename(columns={change :'Target'})
 			else:
 				flash('No such a column ' + change + '! Please review your file', 'danger')
 				return render_template('main/explore.html', form=form, title='Upload csv')
@@ -178,7 +178,7 @@ def analyzeManually():
 			return render_template('main/explore.html', form=form, title='Upload csv')
 		
 		#df_historical = pd.read_csv(f, index_col=[0])
-		df = pd.DataFrame(data=df_historical)
+		#df = pd.DataFrame(data=df_historical)
 		#df = df_historical.filter(['Target'])
 		
 		df['ds'] = df.index
