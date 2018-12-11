@@ -47,11 +47,12 @@ def analyzeFromYahoo():
 		endDate = datetime.datetime.now().date()
 		startDate = datetime.datetime.strptime(str(endDate), '%Y-%m-%d').date() - datetime.timedelta(days=num_days_back)
 		sekarang = str(startDate)+"-TO-"+str(endDate)+"-"
+		current = str(num_days)+"-TO-"+str(num_days_back)+"-ON-"+str(endDate)
 
-		while os.path.isfile("./app/static/data/yahoostocks/"+sekarang+stock+".csv") == False: 
+		while os.path.isfile("./app/static/data/yahoostocks/"+current+stock+".csv") == False: 
 			try: 
 				df_historical = yf.download(stock, startDate, endDate)
-				df_historical.to_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv")
+				df_historical.to_csv("./app/static/data/yahoostocks/"+current+stock+".csv")
 				print 'success'
 				break
 			except ValueError:
@@ -59,7 +60,7 @@ def analyzeFromYahoo():
 				print 'error'
 				return render_template('main/predict.html',form=form, title='Predict from Yahoo Finance')
 		else:
-			df_historical = pd.read_csv("./app/static/data/yahoostocks/"+sekarang+stock+".csv", index_col=[0])
+			df_historical = pd.read_csv("./app/static/data/yahoostocks/"+current+stock+".csv", index_col=[0])
 			print 'previous searched csv used'
 					
 		#df_historical = yf.download(stock, startDate, endDate)
@@ -70,14 +71,14 @@ def analyzeFromYahoo():
 		original_end = df['Close'][-1]
 		
 		#model = Prophet(weekly_seasonality=True, dail y_seasonality=True, yearly_seasonality=True)
-		if os.path.isfile("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl") == True: 
-			with open("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl", "rb") as f:
+		if os.path.isfile("./app/static/data/pickles/"+current+stock+"-pickle.pckl") == True: 
+			with open("./app/static/data/pickles/"+current+stock+"-pickle.pckl", "rb") as f:
 				model = pickle.load(f)
 				print 'Model Opened'            
 		else:
-			model = Prophet()
+			model = Prophet(daily_seasonality=True, weekly_seasonality=True, yearly_seasonality=True)
 			model.fit(df)
-			with open("./app/static/data/pickles/"+sekarang+stock+"-pickle.pckl", "wb") as f:
+			with open("./app/static/data/pickles/"+current+stock+"-pickle.pckl", "wb") as f:
 				pickle.dump(model, f)
 
 
@@ -124,13 +125,13 @@ def analyzeFromYahoo():
 		plotFile = plotFile.rename(index=str, columns={"Close": "Actual", "yhat_scaled": "Forecasted"})
 		plotFile.index.names = ['date']
 		plotFile.tail()
-		plotFile.to_csv('./app/static/data/predictions/predict/'+sekarang+stock+'-'+str(num_days)+'-prediction.csv', na_rep='nan')
+		plotFile.to_csv('./app/static/data/predictions/predict/'+current+stock+'-'+str(num_days)+'-prediction.csv', na_rep='nan')
 
 		return render_template("main/plot.html", original = round(original_end,2), 
 								forecast = round(forecast_start,2),
 								forecast_future = round(forecast_future,2),
 								stock_tinker = stock.upper(),
-								num_days=num_days,sekarang=sekarang,
+								num_days=num_days,sekarang=sekarang,current=current,
 								title='forecasting result of '+stock
 								)
 	return render_template('main/predict.html',form=form, title='Predict from Yahoo Finance')
