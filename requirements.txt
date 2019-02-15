@@ -14,3 +14,4 @@ Flask_Bootstrap==3.3.7.1
 waitress
 gunicorn
 psycopg2
+scikit-learn
