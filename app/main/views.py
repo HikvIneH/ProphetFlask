@@ -18,6 +18,8 @@ import os.path
 import math as math
 import csv
 from math import sqrt
+from sklearn.metrics import mean_squared_error
+
 #from itertools import izip_longest
 import pickle
 
@@ -104,6 +106,10 @@ def analyzeFromYahoo():
 		forecast_start = forecasted_data[-1]
 		forecast_future = forecasted_data[-(int(num_days)+1)]
 
+		rmse1 = p_df.iloc[:num_days]
+		print rmse1
+		rmse = round(sqrt(mean_squared_error(rmse1.Close,rmse1.yhat_scaled , multioutput='raw_values')),4)
+
 		#y_hatx = np.exp(p_df['yhat']['2018-10-25':])
 		#y_hat = np.exp(p_df['yhat'][-8:])
 		'''
@@ -131,6 +137,7 @@ def analyzeFromYahoo():
 								forecast = round(forecast_start,2),
 								forecast_future = round(forecast_future,2),
 								stock_tinker = stock.upper(),
+								RMSE = rmse,
 								num_days=num_days,sekarang=sekarang,current=current,
 								title='forecasting result of '+stock
 								)
@@ -150,6 +157,7 @@ def analyzeManually():
 		yearly = form.yearlySeasonality.data
 		num_days = form.num_days_ahead.data
 		change = form.change.data
+		endDate = datetime.datetime.now().date()
 		print filename, daily, weekly, yearly, num_days
 
 		'''
@@ -206,6 +214,10 @@ def analyzeManually():
 		#date = p_df.index[-plot_num:-1]
 		forecast_start = forecasted_data[-1]
 		forecast_future = forecasted_data[-(int(num_days)+1)]
+
+		rmse1 = p_df.iloc[:num_days]
+		print rmse1
+		rmse = round(sqrt(mean_squared_error(rmse1.Target,rmse1.yhat_scaled , multioutput='raw_values')),4)
 			
 		#y_hatx = np.exp(p_df['yhat']['2018-10-25':])
 		#y_hat = np.exp(p_df['yhat'][-8:])
@@ -222,10 +234,14 @@ def analyzeManually():
 		#newFile = Data(name=f.filename, data=f.read(), user_id=current_user.id)
 		#db.session.add(newFile)
 		#db.session.commit()
+
+		print rmse
+		print original_end
+		print forecast_start
 		
 
 		return render_template("main/plot_explore.html", original = round(original_end,2), 
-								forecast = round(forecast_start,2),
+								forecast = round(forecast_start,2), RMSE = rmse,
 								forecast_future = round(forecast_future,2),
 								filename = filename.upper(),
 								change = change,
