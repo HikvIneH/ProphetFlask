@@ -216,7 +216,7 @@ def analyzeManually():
 		forecast_future = forecasted_data[-(int(num_days)+1)]
 
 		rmse1 = p_df.iloc[:num_days]
-		print "rmse = ",str(rmse1)
+		print "rmse = " + str(rmse1)
 		rmse = round(sqrt(mean_squared_error(rmse1.Target,rmse1.yhat_scaled , multioutput='raw_values')),4)
 			
 		# y_hatx = np.exp(p_df['yhat']['2018-10-25':])
