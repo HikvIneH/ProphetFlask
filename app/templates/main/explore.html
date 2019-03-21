@@ -55,8 +55,8 @@
                             <output for="num_days_ahead" id="selected-days">Future data forecasted :  {{ form.num_days_ahead.data }} day</output>
                             
                             {{ form.num_days_ahead(min=1, max=60, oninput="outputUpdate(value)") }}<br/>
-                            
                         </div>
+                        <div></div>>
                         <!--
                         <h5 class="margin-bottom:25px;">Seasonality functions:<br/>     
                         {{ wtf.form_field(form.dailySeasonality) }}
