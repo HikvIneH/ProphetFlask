@@ -78,7 +78,7 @@ def analyzeFromYahoo():
 				model = pickle.load(f)
 				print 'Model Opened'            
 		else:
-			model = Prophet(weekly_seasonality=True)
+			model = Prophet(weekly_seasonality=True, yearly_seasonality=True)
 			model.fit(df)
 			with open("./app/static/data/pickles/"+current+stock+"-pickle.pckl", "wb") as f:
 				pickle.dump(model, f)
