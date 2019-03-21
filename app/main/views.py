@@ -215,7 +215,7 @@ def analyzeManually():
 		forecast_start = forecasted_data[-1]
 		forecast_future = forecasted_data[-(int(num_days)+1)]
 
-		rmse1 = p_df.iloc[:num_days]
+		rmse1 = p_df.iloc[:360]
 		print "rmse = " + str(rmse1)
 		rmse = round(sqrt(mean_squared_error(rmse1.Target,rmse1.yhat_scaled , multioutput='raw_values')),4)
 			
