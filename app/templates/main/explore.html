@@ -57,12 +57,13 @@
                             {{ form.num_days_ahead(min=1, max=60, oninput="outputUpdate(value)") }}<br/>
                             
                         </div>
-                        
+                        <!--
                         <h5 class="margin-bottom:25px;">Seasonality functions:<br/>     
                         {{ wtf.form_field(form.dailySeasonality) }}
                         {{ wtf.form_field(form.weeklySeasonality) }}
                         {{ wtf.form_field(form.yearlySeasonality) }}
                         </h5>
+                        -->
                         <button class="btn btn-primary" style="margin-bottom: 25px; margin-top: 25px" name='process' type="submit">Submit</button>
                     </form>    
                 </div>

@@ -106,7 +106,7 @@ def analyzeFromYahoo():
 		forecast_start = forecasted_data[-1]
 		forecast_future = forecasted_data[-(int(num_days)+1)]
 
-		rmse1 = p_df.iloc[:num_days]
+		rmse1 = p_df.iloc[:360]
 		print rmse1
 		rmse = round(sqrt(mean_squared_error(rmse1.Close,rmse1.yhat_scaled , multioutput='raw_values')),4)
 
@@ -194,7 +194,8 @@ def analyzeManually():
 		df['y'] = np.log(df['Target'])
 		#df['y'] = np.log(df[-1])
 		original_end = df['Target'][-1]
-		model = Prophet(daily_seasonality=daily, weekly_seasonality=weekly, yearly_seasonality=yearly)
+		#model = Prophet(daily_seasonality=daily, weekly_seasonality=weekly, yearly_seasonality=yearly)
+		model = Prophet()
 		model.fit(df)
 
 		future = model.make_future_dataframe(periods=num_days)
@@ -215,7 +216,7 @@ def analyzeManually():
 		forecast_start = forecasted_data[-1]
 		forecast_future = forecasted_data[-(int(num_days)+1)]
 
-		rmse1 = p_df.iloc[:360]
+		rmse1 = p_df.iloc[:60]
 		print "rmse = " + str(rmse1)
 		rmse = round(sqrt(mean_squared_error(rmse1.Target,rmse1.yhat_scaled , multioutput='raw_values')),4)
 			
