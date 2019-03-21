@@ -211,16 +211,16 @@ def analyzeManually():
 		close_data = p_df.Target
 		forecasted_data = p_df.yhat_scaled
 		date = future['ds']
-		#date = p_df.index[-plot_num:-1]
+		# date = p_df.index[-plot_num:-1]
 		forecast_start = forecasted_data[-1]
 		forecast_future = forecasted_data[-(int(num_days)+1)]
 
 		rmse1 = p_df.iloc[:num_days]
-		print rmse1
+		print "rmse = " + rmse1
 		rmse = round(sqrt(mean_squared_error(rmse1.Target,rmse1.yhat_scaled , multioutput='raw_values')),4)
 			
-		#y_hatx = np.exp(p_df['yhat']['2018-10-25':])
-		#y_hat = np.exp(p_df['yhat'][-8:])
+		# y_hatx = np.exp(p_df['yhat']['2018-10-25':])
+		# y_hat = np.exp(p_df['yhat'][-8:])
 		date = pd.DataFrame(date)
 		close_data = pd.DataFrame(close_data)
 		forecasted_data = pd.DataFrame(forecasted_data)
@@ -229,11 +229,11 @@ def analyzeManually():
 		plotFile = plotFile.rename(index=str, columns={"Target": "Actual", "yhat_scaled": "Forecasted"})
 		plotFile.index.names = ['date']
 		plotFile.tail()
-		plotFile.to_csv('./app/static/data/predictions/explore/'+str(filename).upper()+'-prediction.csv', na_rep='nan')
+		plotFile.to_csv('./app/static/data/predictions/explore/'+str(filename).upper()+str(num_days)+'-prediction.csv', na_rep='nan')
 
-		#newFile = Data(name=f.filename, data=f.read(), user_id=current_user.id)
-		#db.session.add(newFile)
-		#db.session.commit()
+		# newFile = Data(name=f.filename, data=f.read(), user_id=current_user.id)
+		# db.session.add(newFile)
+		# db.session.commit()
 
 		print rmse
 		print original_end
