@@ -73,6 +73,7 @@ def analyzeFromYahoo():
 		original_end = df['Close'][-1]
 		
 		#model = Prophet(weekly_seasonality=True, dail y_seasonality=True, yearly_seasonality=True)
+		'''
 		if os.path.isfile("./app/static/data/pickles/"+current+stock+"-pickle.pckl") == True: 
 			with open("./app/static/data/pickles/"+current+stock+"-pickle.pckl", "rb") as f:
 				model = pickle.load(f)
@@ -82,10 +83,10 @@ def analyzeFromYahoo():
 			model.fit(df)
 			with open("./app/static/data/pickles/"+current+stock+"-pickle.pckl", "wb") as f:
 				pickle.dump(model, f)
+		'''
 
-
-		#model = Prophet()
-		#model.fit(df)
+		model = Prophet(daily_seasonality=False, weekly_seasonality=True ,yearly_seasonality=True)
+		model.fit(df)
 
 		#num_days = 7
 		future = model.make_future_dataframe(periods=num_days)
