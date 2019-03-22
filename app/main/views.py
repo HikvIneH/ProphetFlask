@@ -85,7 +85,7 @@ def analyzeFromYahoo():
 				pickle.dump(model, f)
 		'''
 
-		model = Prophet(daily_seasonality=False, weekly_seasonality=True ,yearly_seasonality=True)
+		model = Prophet()
 		model.fit(df)
 
 		#num_days = 7
